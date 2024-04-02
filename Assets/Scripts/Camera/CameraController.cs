@@ -12,9 +12,18 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
+        MuzzleController.OnShooting += ShakeCamera;
+    }
+
+    private void OnDestroy()
+    {
+        MuzzleController.OnShooting -= ShakeCamera;
+    }
+
+    private void Start()
+    {
         virtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
         virtualCamera.enabled = false;
-        MuzzleController.OnShooting += ShakeCamera;
     }
 
     // Update is called once per frame
@@ -25,23 +34,28 @@ public class CameraController : MonoBehaviour
 
     void ShakeCamera()
     {
-        StartCoroutine(ShakeCameraEnumerator());
+       StartCoroutine(ShakeCameraNumerator()); 
     }
 
-    IEnumerator ShakeCameraEnumerator()
+    IEnumerator ShakeCameraNumerator()
     {
-        /*CinemachineVirtualCamera virtualCamera;
-        virtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
-        virtualCamera.enabled = false;*/
-
-        CinemachineVirtualCamera virtualCameraEnumerator;
-        virtualCameraEnumerator = gameObject.GetComponent<CinemachineVirtualCamera>();
-
-        virtualCameraEnumerator.enabled = true;
-        yield return new WaitForSeconds(maxShakeTime);
-        virtualCameraEnumerator.enabled = false;
-        yield return null;
+        CinemachineVirtualCamera cam = gameObject.GetComponent<CinemachineVirtualCamera>();
+        if(cam != null)
+        {
+            Debug.Log("CAMERA IS OK");
+            cam.enabled = !cam.enabled;
+            yield return new WaitForSeconds(maxShakeTime);
+            cam.enabled = !cam.enabled;
+            yield return null;
+        }
+        else
+        {
+            Debug.Log("CAMERA IS NULL");
+            yield return null;
+        }
     }
+
+    
 
 
 
