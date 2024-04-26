@@ -7,29 +7,44 @@ using UnityEngine;
 public class communication : MonoBehaviour
 {
 
-    private string param;
-    private TMP_Text name;
+    private string param = "name";
+    private TMP_Text username;
 
     // Start is called before the first frame update
     void Start()
     {
-        name = GetComponent<TMP_Text>();
+        
+    }
+
+    private void Awake()
+    {
+
+        Debug.Log(this.param);
+        this.username = GetComponent<TMP_Text>();
+
+        //absoluteURL è di sola lettura quindi questa operazione non si può eseguire 
+
+        //Application.absoluteURL. = "http://example.com/?name=ciao"
 
         try
         {
-            param = Application.absoluteURL.Substring(Application.absoluteURL.IndexOf("=") + 1);
+            Debug.Log("sono nel try");
+            this.param = Application.absoluteURL.Substring(Application.absoluteURL.IndexOf("=") + 1);
+            Debug.Log("il nome è: " + param);
 
         }
         catch (System.Exception ex)
         {
+
+            //per qualche motivo tutt'ora ignoto non arriva mai qua
             Debug.LogException(ex);
-            param = "me";
+            Debug.Log("nessun parametro trovato");
+            this.param = "nameError";
 
         }
 
-        //name.text = param;
-        name.text = "me";
-
+        this.username.text = this.param;
+        
     }
 
 }
