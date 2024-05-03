@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -7,43 +8,28 @@ using UnityEngine;
 public class communication : MonoBehaviour
 {
 
-    private string param = "name";
-    private TMP_Text username;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private string param;                               //variable used to contain the name                           
+    private TMP_Text username;                          //reference to the GameObject that shows the name
 
     private void Awake()
     {
 
-        Debug.Log(this.param);
         this.username = GetComponent<TMP_Text>();
+        
 
-        //absoluteURL è di sola lettura quindi questa operazione non si può eseguire 
-
-        //Application.absoluteURL. = "http://example.com/?name=ciao"
-
-        try
+        if(Application.absoluteURL.Length < 1)              //if the variable is empty set a default name
         {
-            Debug.Log("sono nel try");
-            this.param = Application.absoluteURL.Substring(Application.absoluteURL.IndexOf("=") + 1);
+            Debug.Log("nessun parametro trovato");
+            this.param = "nameError";                       //default name
+
+        }else {                                             //if it isn't empty read from the variable absoluteURL
+
+            this.param = Application.absoluteURL.Substring(Application.absoluteURL.IndexOf("=") + 1);   //initiates param to the first URL parameter, that occurs after the first '='
             Debug.Log("il nome è: " + param);
 
         }
-        catch (System.Exception ex)
-        {
 
-            //per qualche motivo tutt'ora ignoto non arriva mai qua
-            Debug.LogException(ex);
-            Debug.Log("nessun parametro trovato");
-            this.param = "nameError";
-
-        }
-
-        this.username.text = this.param;
+        this.username.text = this.param;                    //inits the text variable of the gameObject "Username" to the param                 
         
     }
 
