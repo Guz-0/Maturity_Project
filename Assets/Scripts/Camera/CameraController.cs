@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
         CinemachineVirtualCamera cam = gameObject.GetComponent<CinemachineVirtualCamera>();
         if(cam != null)
         {
-            Debug.Log("CAMERA IS OK");
+            //Debug.Log("CAMERA IS OK");
             cam.enabled = !cam.enabled;
             yield return new WaitForSeconds(maxShakeTime);
             cam.enabled = !cam.enabled;
