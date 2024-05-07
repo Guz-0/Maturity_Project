@@ -14,9 +14,13 @@ public class MuzzleController : MonoBehaviour
     [SerializeField] private float maxShootingTimer = 0.5f;
     private float shootingTimer = 0f;
 
+    public GameObject[] projectilesArray;
+    private int projectilesArrayIndex = 0;
+
     void Start()
     {
         projectileBody = projectile.GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -36,11 +40,31 @@ public class MuzzleController : MonoBehaviour
         {
             OnShooting?.Invoke();
 
-            Instantiate(projectile, transform.position, transform.rotation);
-            shootingTimer = 0f;
+            ActivateProjectile();
 
+        } 
+    }
+
+    void ActivateProjectile()
+    {
+        if (projectilesArray.Length == projectilesArrayIndex)
+        {
+            projectilesArrayIndex = 0;
         }
-        
 
+        //Debug.Log("1 -- INDEX-> " + projectilesArrayIndex);
+
+
+        projectilesArray[projectilesArrayIndex].SetActive(true);
+        GameObject proj = projectilesArray[projectilesArrayIndex];
+
+        proj.transform.position = transform.position;
+        proj.transform.rotation = transform.rotation;
+
+        shootingTimer = 0f;
+
+        projectilesArrayIndex++;
+
+        //Debug.Log("2 -- FINISHED ACTIVATING PROJ");
     }
 }

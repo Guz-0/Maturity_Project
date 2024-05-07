@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class GeneralButtonController : MonoBehaviour
 {
+
+    
+
     public float scaleFrom = 0f;
     public float scaleTo = 1f;
     public float scaleDuration = 1f;
@@ -27,6 +31,13 @@ public class GeneralButtonController : MonoBehaviour
     private Vector3 fromScale;
     private Vector3 endScale;
 
+    public GameObject leftImage;
+    public GameObject rightImage;
+
+    public TMP_Text textToFade;
+
+    
+
     void Start()
     {
         transform.localScale = new Vector3(scaleFrom, scaleFrom, scaleFrom);
@@ -35,6 +46,9 @@ public class GeneralButtonController : MonoBehaviour
         button.enabled = false;
 
         StartCoroutine(ScaleButton());
+
+        leftImage.SetActive(false);
+        rightImage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -47,6 +61,9 @@ public class GeneralButtonController : MonoBehaviour
     {
         yield return new WaitForSeconds(scaleDelay);
         transform.DOScale(scaleTo, scaleDuration).onComplete = OnScaleCompleted;
+        /* ADD TEXT FADE
+        textToFade.CrossFadeAlpha(1f, 1f,false);
+        textToFade. */
         yield return null;
     }
 
@@ -68,6 +85,9 @@ public class GeneralButtonController : MonoBehaviour
         {
             transform.DOMoveY(endYPosition, yOffsetDuration);
             transform.DOScale(endScale, pointerEnterScaleOffsetDuration);
+
+            leftImage.SetActive(true);
+            rightImage.SetActive(true);
         }
     }
 
@@ -77,6 +97,8 @@ public class GeneralButtonController : MonoBehaviour
         {
             transform.DOMoveY(fromYPosition, yOffsetDuration);
             transform.DOScale(fromScale, pointerEnterScaleOffsetDuration);
+            leftImage.SetActive(false);
+            rightImage.SetActive(false);
         }
     }
 }
