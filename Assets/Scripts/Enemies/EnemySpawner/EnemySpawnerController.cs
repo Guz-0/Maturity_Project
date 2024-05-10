@@ -17,15 +17,28 @@ public class EnemySpawnerController : MonoBehaviour
     private int totalEnemiesInPoolCounter = 0;
 
 
+
     private void Start()
     {
         InvokeRepeating(nameof(SpawnEnemy), 1, 1);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
+
     }
 
 
 
-    public static void DisableEnemy(GameObject enemy)
+    public static void DisableEnemy(GameObject enemy, int valueOfEnemy)
     {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.AddScore(valueOfEnemy);
+        }
+        else
+        {
+            Debug.Log("[GAMEMANAGER IS NULL]");
+        }
         enemy.SetActive(false);
     }
 
@@ -43,18 +56,18 @@ public class EnemySpawnerController : MonoBehaviour
         bool flag = false;
         isThereAnyObjectDisabled = false;
 
-        Debug.Log("ARRAY LENGHT -> " + enemyPool.Length);
+        //Debug.Log("ARRAY LENGHT -> " + enemyPool.Length);
         for (int i=0; i < totalEnemiesInPoolCounter; i++)
         {
-            Debug.Log("total: " + totalEnemiesInPoolCounter);
+            //Debug.Log("total: " + totalEnemiesInPoolCounter);
             if (enemyPool[i] != null)
             {
-                Debug.Log("OBJECT " + i + " IS ALIVE");
+                //Debug.Log("OBJECT " + i + " IS ALIVE");
                 flag = enemyPool[i].activeSelf;
-                Debug.Log("OBJECT " + i + " IS " + flag);
+                //Debug.Log("OBJECT " + i + " IS " + flag);
                 if (!flag)
                 {
-                    Debug.Log("OBJECT " + i + " IS DISABLED");
+                    //Debug.Log("OBJECT " + i + " IS DISABLED");
                     flag = true;
                     isThereAnyObjectDisabled = flag;
                     idxOfDisabledObject = i;
@@ -64,7 +77,7 @@ public class EnemySpawnerController : MonoBehaviour
             
         }
 
-        Debug.Log("Are there objects disabled: " + isThereAnyObjectDisabled);
+        //Debug.Log("Are there objects disabled: " + isThereAnyObjectDisabled);
         if (isThereAnyObjectDisabled)
         {
             disabledEnemy = enemyPool[idxOfDisabledObject];
@@ -74,11 +87,13 @@ public class EnemySpawnerController : MonoBehaviour
         }
         else
         {
+            
             instantiatedEnemy = Instantiate(enemyObject, RandomSpawnPosition(), transform.rotation);
+            
             enemyPool[totalEnemiesInPoolCounter] = instantiatedEnemy;
             totalEnemiesInPoolCounter++;
         }
-        Debug.Log("total: " + totalEnemiesInPoolCounter);
+        //Debug.Log("total: " + totalEnemiesInPoolCounter);
 
     }
 

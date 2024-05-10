@@ -10,6 +10,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float movementSpeed = 1f;
     private float step;
 
+    private int valueOfEnemy = 100;
+
+    [SerializeField] private float minSpeed = 5;
+    [SerializeField] private float maxSpeed = 20;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("PLAYER");
@@ -25,7 +30,7 @@ public class EnemyController : MonoBehaviour
     {
         AimAtPlayer();
 
-        movementSpeed = Random.Range(2.5f,7.5f);
+        movementSpeed = Random.Range(minSpeed,maxSpeed);
         step = Time.deltaTime * movementSpeed;
         transform.position = Vector2.MoveTowards(transform.position,player.transform.position, step);
     }
@@ -45,7 +50,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.CompareTag("PROJECTILE"))
         {
-            EnemySpawnerController.DisableEnemy(gameObject);
+            EnemySpawnerController.DisableEnemy(gameObject, valueOfEnemy);
         }
     }
 
