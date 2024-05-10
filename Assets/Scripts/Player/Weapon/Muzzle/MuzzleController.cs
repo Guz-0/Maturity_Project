@@ -17,6 +17,8 @@ public class MuzzleController : MonoBehaviour
     public GameObject[] projectilesArray;
     private int projectilesArrayIndex = 0;
 
+    private Vector3 desiredRotationProjectile;
+
     void Start()
     {
         projectileBody = projectile.GetComponent<Rigidbody2D>();
@@ -34,6 +36,13 @@ public class MuzzleController : MonoBehaviour
         if(shootingTimer < maxShootingTimer)
         {
             shootingTimer += Time.deltaTime;
+        }
+
+        if(Input.GetMouseButton(0) && shootingTimer>maxShootingTimer){
+
+            OnShooting?.Invoke();
+
+            ActivateProjectile();
         }
 
         if (Input.GetMouseButtonDown(0) && shootingTimer>maxShootingTimer)
@@ -57,9 +66,10 @@ public class MuzzleController : MonoBehaviour
 
         projectilesArray[projectilesArrayIndex].SetActive(true);
         GameObject proj = projectilesArray[projectilesArrayIndex];
+        
 
         proj.transform.position = transform.position;
-        proj.transform.rotation = transform.rotation;
+        //proj.transform.localEulerAngles = desiredRotationProjectile;
 
         shootingTimer = 0f;
 
