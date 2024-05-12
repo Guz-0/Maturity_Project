@@ -1,17 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using System.Text;
-using System;
+using UnityEngine.UI;
 
-public class TestingScript : MonoBehaviour
+public class TextController : MonoBehaviour
 {
-    public GameObject spawner;
-    private Collider2D myCollider;
-    private Vector2 x;
-    private Vector2 y;
-
     [SerializeField] private TMP_Text text;
 
     private string wordToPrint;
@@ -19,57 +15,17 @@ public class TestingScript : MonoBehaviour
 
     [SerializeField] private float waitingTime = 0.1f;
 
-    public float maxTime;
-    public float minTime;
+    [SerializeField] private float maxTime;
+    [SerializeField] private float minTime;
 
-    void Start()
+    [SerializeField] private string stringToPrint;
+
+    [SerializeField] private Button myButton;
+
+    private void Start()
     {
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void ColliderTest()
-    {
-        x = myCollider.bounds.max;
-        y = myCollider.bounds.min;
-        //Debug.Log("MAX -> " + x + "\nMIN -> " + y);
-    }
-
-    public void Testing()
-    {
-        /*int i = 0;
-        wordToPrint = "play";
-        arrayWordToPrint = wordToPrint.ToCharArray();
-        /*for(int i = 0; i < arrayWordToPrint.Length; i++)
-        {
-            Debug.Log(arrayWordToPrint[i]);
-        }
-        Debug.Log(wordToPrint.IndexOf('l'));
-        Debug.Log(wordToPrint.ToIntArray());
-
-        Encoding utf8 = Encoding.UTF8;
-
-        int[] ascii = {UnityEngine.Random.Range(48,123), UnityEngine.Random.Range(48, 123), UnityEngine.Random.Range(48, 123) };
-
-
-        for (i = 0; i < ascii.Length; i++)
-        {
-            Debug.Log(Convert.ToChar(ascii[i]));
-        }
-         48 -> 123
-        */
-        string word = "hello";
-        char[] array = word.ToCharArray();
-        StartCoroutine(TypeWriter(array));
-        Debug.Log("what");
-
-        
+        myButton = GetComponent<Button>();
+        StartCoroutine(TypeWriter(stringToPrint.ToCharArray()));
     }
 
     IEnumerator TypeWriter(char[] array)
@@ -81,7 +37,9 @@ public class TestingScript : MonoBehaviour
         float expiredTime = 0;
         float maxT = 0;
 
-        for(int i = 0; i < array.Length; i++)
+        
+
+        for (int i = 0; i < array.Length; i++)
         {
             flag = false;
             maxT = UnityEngine.Random.Range(minTime, maxTime);
@@ -101,7 +59,8 @@ public class TestingScript : MonoBehaviour
                 {
                     //Debug.Log("FOUND LETTER --> " + randomChar);
                     finalString += randomChar;
-                }else if (expiredTime >= maxT)
+                }
+                else if (expiredTime >= maxT)
                 {
                     //Debug.Log("TIME EXPIRED, LETTER IS -->  " + array[i]);
                     finalString += array[i];
@@ -112,7 +71,10 @@ public class TestingScript : MonoBehaviour
                 yield return new WaitForSeconds(waitingTime);
             }
         }
-
+        if (myButton != null)
+        {
+            myButton.enabled = true;
+        }
         yield return null;
     }
 }

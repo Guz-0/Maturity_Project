@@ -31,4 +31,9 @@ public class GameManager : MonoBehaviour
         score += increment;
         Debug.Log("Score-> " + score);
     }
+
+    public int GetScore()
+    {
+        return score;
+    }
 }

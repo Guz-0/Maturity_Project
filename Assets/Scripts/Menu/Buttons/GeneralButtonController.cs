@@ -36,6 +36,8 @@ public class GeneralButtonController : MonoBehaviour
 
     public TMP_Text textToFade;
 
+    public TextController myTextController;
+
     
 
     void Start()
@@ -49,6 +51,8 @@ public class GeneralButtonController : MonoBehaviour
 
         leftImage.SetActive(false);
         rightImage.SetActive(false);
+
+        myTextController = GetComponent<TextController>();
     }
 
     // Update is called once per frame
@@ -70,7 +74,10 @@ public class GeneralButtonController : MonoBehaviour
     private void OnScaleCompleted()
     {
         initialScaleCompleted = true;
-        button.enabled = true;
+
+        if (!myTextController.enabled){
+            button.enabled = true;
+        }
 
         fromYPosition = transform.position.y;
         endYPosition = transform.position.y + yOffset;
@@ -101,4 +108,5 @@ public class GeneralButtonController : MonoBehaviour
             rightImage.SetActive(false);
         }
     }
+
 }
