@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
+using UnityEditor.Rendering;
 
 public class CameraController : MonoBehaviour
 {
 
     private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private float maxShakeTime = 0.5f;
+
+    [SerializeField] private GameObject playerObject;
+    [SerializeField] private float movingDuration = 0.5f;
 
     void Awake()
     {
@@ -32,9 +36,19 @@ public class CameraController : MonoBehaviour
         
     }
 
+    void FixedUpdate()
+    {
+        //FollowPlayer();
+    }
+
     void ShakeCamera()
     {
        StartCoroutine(ShakeCameraNumerator()); 
+    }
+
+    void FollowPlayer()
+    {
+        transform.DOMove(playerObject.transform.position,movingDuration);
     }
 
     IEnumerator ShakeCameraNumerator()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Pool;
+using System;
 
 public class EnemySpawnerController : MonoBehaviour
 {
@@ -11,12 +12,12 @@ public class EnemySpawnerController : MonoBehaviour
     [SerializeField] private GameObject enemyObject;
 
 
-    private GameObject[] enemyPool = new GameObject[100];
+    private GameObject[] enemyPool = new GameObject[1000];
     private bool isThereAnyObjectDisabled = false;
     private int idxOfDisabledObject;
     private int totalEnemiesInPoolCounter = 0;
 
-
+    public static event Action onEnemyDestroy;
 
     private void Start()
     {
@@ -24,7 +25,6 @@ public class EnemySpawnerController : MonoBehaviour
         InvokeRepeating(nameof(SpawnEnemy), 1, 1);
         InvokeRepeating(nameof(SpawnEnemy), 1, 1);
         InvokeRepeating(nameof(SpawnEnemy), 1, 1);
-
     }
 
 
@@ -33,20 +33,24 @@ public class EnemySpawnerController : MonoBehaviour
     {
         if(GameManager.Instance != null)
         {
-            GameManager.Instance.AddScore(valueOfEnemy);
+            onEnemyDestroy.Invoke();
+            GameManager.Instance?.AddScore(valueOfEnemy);
         }
         else
         {
             Debug.Log("[GAMEMANAGER IS NULL]");
         }
+        
         enemy.SetActive(false);
+        
     }
 
     private Vector2 RandomSpawnPosition()
     {
-        Collider2D myCollider = spawnersArray[Random.Range(0,3)].GetComponent<Collider2D>();
-        Vector2 spawnPos = new Vector2(Random.Range(myCollider.bounds.max.x, myCollider.bounds.min.x), Random.Range(myCollider.bounds.max.y, myCollider.bounds.min.y));
+        Collider2D myCollider = spawnersArray[UnityEngine.Random.Range(0,4)].GetComponent<Collider2D>();
+        Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(myCollider.bounds.max.x, myCollider.bounds.min.x), UnityEngine.Random.Range(myCollider.bounds.max.y, myCollider.bounds.min.y));
         return spawnPos;
+        
     }
 
     public void SpawnEnemy()
@@ -96,6 +100,7 @@ public class EnemySpawnerController : MonoBehaviour
         //Debug.Log("total: " + totalEnemiesInPoolCounter);
 
     }
+
 
 
 }

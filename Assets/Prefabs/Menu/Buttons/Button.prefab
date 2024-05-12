@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282622962
-  m_fontColor: {r: 0.9490197, g: 0.6392157, b: 0.2627451, a: 1}
+    rgba: 4279435008
+  m_fontColor: {r: 0, g: 1, b: 0.07032752, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 6223494542366780230}
   - component: {fileID: 4407679147453584234}
   - component: {fileID: 3378819704610418266}
+  - component: {fileID: 1227790351217636442}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -357,6 +358,7 @@ MonoBehaviour:
   leftImage: {fileID: 8495088469830160132}
   rightImage: {fileID: 5509102871126756591}
   textToFade: {fileID: 41315637289380400}
+  myTextController: {fileID: 0}
 --- !u!114 &3378819704610418266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +404,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1227790351217636442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768849119076403005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942364fc396925649bd7ddf00117a3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 41315637289380400}
+  waitingTime: 0.1
+  maxTime: 0.5
+  minTime: 0.1
+  stringToPrint: 
+  myButton: {fileID: 0}
 --- !u!1 &8495088469830160132
 GameObject:
   m_ObjectHideFlags: 0
