@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2387f1b01043f8043b028bd559a5b673, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 7.48, y: 7.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &8512460230311217989
@@ -151,6 +151,12 @@ MonoBehaviour:
   explosionParticles: {fileID: 8595538624312819990}
   explosionDuration: 4
   valueText: {fileID: 2858504830127712034}
+  waitBeforeFadingText: 0.5
+  fadingTime: 1
+  spritesArray:
+  - {fileID: 21300000, guid: 2387f1b01043f8043b028bd559a5b673, type: 3}
+  - {fileID: 21300000, guid: 78494150a34ff5745bff2837a1fdc9d2, type: 3}
+  - {fileID: 21300000, guid: 61d10cc44ecf59849906f5eecc526ca4, type: 3}
 --- !u!1 &7782024628205427399
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +369,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8595538624312819990}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 4
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -438,8 +444,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 1
+      scalar: 3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -491,7 +497,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 30
+      scalar: 40
       minScalar: 25
       maxCurve:
         serializedVersion: 2
@@ -609,7 +615,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1302,7 +1308,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 100
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5157,7 +5163,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 451d5ab275346c845a8c7edf4371aa63, type: 2}
+  - {fileID: 2100000, guid: f32d3421dc795c94ea94c9dfde8a6233, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

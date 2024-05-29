@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,12 +21,80 @@ public class TextController : MonoBehaviour
 
     [SerializeField] private string stringToPrint;
 
-    [SerializeField] private Button myButton;
+    private Button myButton;
+    private bool isButtonFirstTimeEnabled;
+
+    private bool isAnimationFinished = false;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// 
+
+    [Header("Enter-Exit animations")]
+
+    [SerializeField] private float scaleOffsetMultiplier = 1.5f;
+    [SerializeField] private float scaleAnimationDuration = 0.5f;
+
+    [SerializeField] private float yOffset = 10f;
+    [SerializeField] private float yAnimationDuration = 0.5f;
+
+    private Vector3 endScale;
+    private Vector3 fromScale;
+
+    private float endYPosition;
+    private float fromYPosition;
+
+    //[SerializeField] private GameObject rightImage;
+    //[SerializeField] private GameObject leftImage;
+
+    private void Awake()
+    {
+        if(GameManager.Instance != null)
+        {
+            isButtonFirstTimeEnabled = GameManager.Instance.GetisButtonFirstTimeEnabled();
+            GameManager.Instance.ButtonAlreadyEnabled();
+        }
+        
+        myButton = GetComponent<Button>();
+    }
 
     private void Start()
     {
-        myButton = GetComponent<Button>();
-        StartCoroutine(TypeWriter(stringToPrint.ToCharArray()));
+        endScale = transform.localScale * scaleOffsetMultiplier;
+        fromScale = transform.localScale;
+
+        endYPosition = transform.position.y + yOffset;
+        fromYPosition = transform.position.y;
+    }
+
+    private void OnEnable()
+    {
+        if (isButtonFirstTimeEnabled)
+        {
+            //StartCoroutine(TypeWriter(stringToPrint.ToCharArray()));
+            //myButton.enabled = false;
+            isButtonFirstTimeEnabled = false;
+        }
+        else
+        {
+            text.SetText(stringToPrint);
+            isAnimationFinished = true;
+        }
+        Debug.Log("ONENABLE animation: " + isAnimationFinished + "\nbuttonFirstTime: " + isButtonFirstTimeEnabled);
+    }
+
+    private void OnDisable()
+    {
+
+        /*if(rightImage.activeSelf && leftImage.activeSelf)
+        {
+            rightImage.SetActive(false);
+            leftImage.SetActive(false);
+
+        }*/
+
+        //OnPointerExit();
     }
 
     IEnumerator TypeWriter(char[] array)
@@ -38,7 +107,6 @@ public class TextController : MonoBehaviour
         float maxT = 0;
 
         
-
         for (int i = 0; i < array.Length; i++)
         {
             flag = false;
@@ -71,10 +139,45 @@ public class TextController : MonoBehaviour
                 yield return new WaitForSeconds(waitingTime);
             }
         }
+
+        
+
         if (myButton != null)
         {
+            isAnimationFinished = true;
             myButton.enabled = true;
         }
+
+        Debug.Log("AFTER ANIMATION animation: " + isAnimationFinished + "\nbuttonFirstTime: " + isButtonFirstTimeEnabled);
+
         yield return null;
     }
+
+    /*
+
+    public void OnPointerEnter()
+    {
+        if (isAnimationFinished)
+        {
+            transform.DOMoveY(endYPosition, yAnimationDuration);
+            transform.DOScale(endScale, scaleAnimationDuration);
+
+            //leftImage.SetActive(true);
+            //rightImage.SetActive(true);
+        }
+    }
+
+    public void OnPointerExit()
+    {
+        if (isAnimationFinished)
+        {
+            transform.DOMoveY(fromYPosition, yAnimationDuration);
+            transform.DOScale(fromScale, scaleAnimationDuration);
+            
+            //leftImage.SetActive(false);
+            //rightImage.SetActive(false);
+        }
+    }
+
+    */
 }

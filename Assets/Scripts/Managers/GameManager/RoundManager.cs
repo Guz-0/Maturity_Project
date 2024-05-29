@@ -7,7 +7,7 @@ public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance { get; private set; }
 
-    public static event Action OnNextRound;
+    
 
     private void Awake()
     {

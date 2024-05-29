@@ -41,13 +41,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmount: 0.517
-    - _DissolveScale: 63
+    - _DissolveAmount: 0
+    - _DissolveScale: 48
     - _OutlifeThickness: 0.5
-    - _OutlineThickness: 0.1
+    - _OutlineThickness: 0
     - _TwilrAmount: 0
     m_Colors:
-    - _OutlineColor: {r: 0.9486351, g: 1, b: 0, a: 0}
+    - _OutlineColor: {r: 0.9486351, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &189779131984470850
 MonoBehaviour:

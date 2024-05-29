@@ -17,32 +17,43 @@ public class EnemySpawnerController : MonoBehaviour
     private int idxOfDisabledObject;
     private int totalEnemiesInPoolCounter = 0;
 
-    public static event Action onEnemyDestroy;
+    [SerializeField] private int nextWaveScore = 5000;
+    [SerializeField] private float firstSpawningCountdown = 3f;
+    private int scoreElapsed = 0;
+    [SerializeField] private float toSubtractFromSpawningCountdown;
+    [SerializeField] private float pauseTimeBetweenRounds = 2f;
+
 
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
-        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
-        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
-        InvokeRepeating(nameof(SpawnEnemy), 1, 1);
+        EnemyController.onEnemyDestroy += EnemyGotHit;
+
+        StartCoroutine(SpawningManager());
+
+        /*
+        InvokeRepeating(nameof(SpawnEnemy), 1, 3);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 3);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 3);
+        InvokeRepeating(nameof(SpawnEnemy), 1, 3);
+        */
+    }
+
+    private void OnDestroy()
+    {
+        EnemyController.onEnemyDestroy -= EnemyGotHit;
     }
 
 
 
-    public static void DisableEnemy(GameObject enemy, int valueOfEnemy)
+    public void EnemyGotHit()
     {
-        if(GameManager.Instance != null)
-        {
-            onEnemyDestroy.Invoke();
-            GameManager.Instance?.AddScore(valueOfEnemy);
-        }
-        else
-        {
-            Debug.Log("[GAMEMANAGER IS NULL]");
-        }
-        
+        scoreElapsed += 100;
+        Debug.Log("ENEMY GOT HIT");
+    }
+
+    public static void DisableEnemy(GameObject enemy)
+    {
         enemy.SetActive(false);
-        
     }
 
     private Vector2 RandomSpawnPosition()
@@ -78,7 +89,6 @@ public class EnemySpawnerController : MonoBehaviour
                     break;
                 }
             }
-            
         }
 
         //Debug.Log("Are there objects disabled: " + isThereAnyObjectDisabled);
@@ -98,8 +108,35 @@ public class EnemySpawnerController : MonoBehaviour
             totalEnemiesInPoolCounter++;
         }
         //Debug.Log("total: " + totalEnemiesInPoolCounter);
-
     }
+
+    IEnumerator SpawningManager()
+    {
+        while (true)
+        {
+            if (scoreElapsed >= nextWaveScore && firstSpawningCountdown>=1f)
+            {
+                firstSpawningCountdown -= toSubtractFromSpawningCountdown;
+                scoreElapsed = 0;
+                Debug.Log("SpawningCountdown-> " + firstSpawningCountdown);
+
+                yield return new WaitForSeconds(pauseTimeBetweenRounds);
+            }
+
+
+            Debug.Log("SPAWNING ENEMIES");
+            for(int i = 0; i < 4; i++)
+            {
+                SpawnEnemy();
+
+            }
+            yield return new WaitForSeconds(firstSpawningCountdown);
+        }
+    }
+
+
+
+    
 
 
 

@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c51a937a13a02734d96650a28a36d009, type: 2}
-  m_sharedMaterial: {fileID: 8766769219174540752, guid: c51a937a13a02734d96650a28a36d009, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1a1214ae6e93032419eadd54dafba5f7, type: 2}
+  m_sharedMaterial: {fileID: -3327212352819611747, guid: 1a1214ae6e93032419eadd54dafba5f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 25
+  m_characterSpacing: 55
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4382940539927506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5768849119076403005}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36f0b27bdf9ca1d44966f28bd53e2ffb, type: 3}
   m_Name: 
@@ -353,6 +353,8 @@ MonoBehaviour:
   scaleDelay: 0
   yOffset: 10
   yOffsetDuration: 0.5
+  scaleOffsetMultiplier: 1.5
+  scaleOffsetMultiplierDuration: 0.5
   pointerEnterScaleOffset: 0.1
   pointerEnterScaleOffsetDuration: 0.2
   leftImage: {fileID: 8495088469830160132}
@@ -375,35 +377,11 @@ MonoBehaviour:
   - eventID: 0
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4407679147453584234}
-          m_TargetAssemblyTypeName: GeneralButtonController, Assembly-CSharp
-          m_MethodName: OnPointerEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 1
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4407679147453584234}
-          m_TargetAssemblyTypeName: GeneralButtonController, Assembly-CSharp
-          m_MethodName: OnPointerExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!114 &1227790351217636442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +399,10 @@ MonoBehaviour:
   maxTime: 0.5
   minTime: 0.1
   stringToPrint: 
-  myButton: {fileID: 0}
+  scaleOffsetMultiplier: 1.1
+  scaleAnimationDuration: 0.25
+  yOffset: 0
+  yAnimationDuration: 0
 --- !u!1 &8495088469830160132
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7007893419900677848
 RectTransform:
   m_ObjectHideFlags: 0

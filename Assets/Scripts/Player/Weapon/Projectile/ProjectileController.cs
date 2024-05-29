@@ -10,15 +10,26 @@ public class ProjectileController : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+
     void Awake()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        //PointToMouse();
+        PointToMouse();
     }
 
-    
+    private void Start()
+    {
+        //MuzzleController.OnShooting += ()=> StartCoroutine(Moving());
+    }
+
+    private void OnDestroy()
+    {
+        //MuzzleController.OnShooting -= () => StartCoroutine(Moving());
+    }
+
+
     void Update()
     {
         CheckIfOutOfCamera();
@@ -41,16 +52,17 @@ public class ProjectileController : MonoBehaviour
     {
         if(spriteRenderer.isVisible == false)
         {
+            //body.velocity = Vector2.zero;
             gameObject.SetActive(false);
         }
     }
 
     private void OnEnable()
     {
-        StartCoroutine(moving());
+        StartCoroutine(Moving());
     }
 
-    IEnumerator moving()
+    IEnumerator Moving()
     {
         yield return new WaitForSeconds(0.01f);
         PointToMouse();
