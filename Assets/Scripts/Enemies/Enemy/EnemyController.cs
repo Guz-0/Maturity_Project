@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,12 +34,20 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float waitBeforeFadingText = 0.5f;
     [SerializeField] private float fadingTime = 1f;
 
+    
+    [SerializeField] private Sprite[] spritesArray = new Sprite[3];
+
     private Vector3 firstScale;
+
+    public static Action onEnemyDestroy;
 
     private void Awake()
     {
+        //spritesArray = new Sprite[3];
+        myRenderer = GetComponent<SpriteRenderer>();
+        myRenderer.sprite = spritesArray[UnityEngine.Random.Range(0, spritesArray.Length)];
         firstScale = transform.localScale;
-        Debug.Log(firstScale);
+        //Debug.Log(firstScale);
     }
 
     void Start()
@@ -46,7 +55,7 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("PLAYER");
         yScaleStart = gameObject.transform.localScale.y;
 
-        myRenderer = GetComponent<SpriteRenderer>();
+        
         myCollider = GetComponent<Collider2D>();
 
         valueText.enabled = false;
@@ -63,7 +72,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (!didEnemyGotHit)
+        if (!didEnemyGotHit && myRenderer.sprite != spritesArray[2])
         {
             ChangeScale();
         }
@@ -81,11 +90,11 @@ public class EnemyController : MonoBehaviour
 
     void FollowPlayer()
     {
-        //AimAtPlayer();
-
-        
-        step = Time.deltaTime * movementSpeed;
-        transform.position = Vector2.MoveTowards(transform.position,player.transform.position, step);
+        if (player.gameObject.activeSelf==true)
+        {
+            step = Time.deltaTime * movementSpeed;
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, step);
+        }
     }
 
     void AimAtPlayer()
@@ -103,6 +112,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.CompareTag("PROJECTILE"))
         {
+            //Debug.Log("PROJ");
             myCollider.enabled = false;
             StartCoroutine(AfterEnemyDeath());
         }
@@ -113,13 +123,23 @@ public class EnemyController : MonoBehaviour
         if(AudioManagerScript.Instance != null)
         {
             AudioManagerScript.Instance.PlayEffect(explosionAudio);
-        }
-        didEnemyGotHit = true;
+            //Debug.Log("Playing audio");
 
+        }
+
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.AddScore(valueOfEnemy);
+        }
+       
+        //EnemySpawnerController.EnemyGotHit();
+        onEnemyDestroy.Invoke();
+
+        didEnemyGotHit = true;
 
         myRenderer.enabled = false;
         transform.localScale = new Vector3(transform.localScale.x, firstScale.y, transform.localScale.z);
-        Debug.Log("new scale: " + transform.localScale);
+        //Debug.Log("new scale: " + transform.localScale);
         explosionParticles.SetActive(true);
 
         valueText.enabled = true;
@@ -135,15 +155,18 @@ public class EnemyController : MonoBehaviour
         explosionParticles.SetActive(false);
         valueText.DOFade(1, 0f);
         valueText.enabled = false;
-        EnemySpawnerController.DisableEnemy(gameObject,valueOfEnemy);   
+
+        
+        EnemySpawnerController.DisableEnemy(gameObject);
 
         yield return null;
     }
 
     private void OnEnable()
     {
-        timeDivider = Random.Range(5, 11);
-        movementSpeed = Random.Range(minSpeed, maxSpeed);
+        myRenderer.sprite = spritesArray[UnityEngine.Random.Range(0, spritesArray.Length)];
+        timeDivider = UnityEngine.Random.Range(5, 11);
+        movementSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
 
         
         didEnemyGotHit = false;

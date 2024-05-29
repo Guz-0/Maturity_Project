@@ -24,7 +24,13 @@ public class SceneManagerScript : MonoBehaviour
 
     public void PlayGame()
     {
-        DOTween.Clear();
+        //DOTween.Clear();
         SceneManager.LoadScene("Game");
+    }
+
+    public void PlayScene(string sceneName)
+    {
+        GameManager.Instance.SetScore(0);
+        SceneManager.LoadScene(sceneName);
     }
 }
