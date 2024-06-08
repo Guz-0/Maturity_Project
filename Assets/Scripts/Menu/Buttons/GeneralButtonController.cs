@@ -31,7 +31,4 @@ public class GeneralButtonController : MonoBehaviour
         SceneManagerScript.Instance.PlayScene(sceneName);
     }
     
-    
-    
-
 }

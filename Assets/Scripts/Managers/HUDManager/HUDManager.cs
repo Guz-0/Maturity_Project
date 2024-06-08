@@ -38,7 +38,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemySpawnerController.onEnemyDestroy -= UpdateScore;
+        EnemyController.onEnemyDestroy -= UpdateScore;
         PlayerController.onBombDeploy -= UpdateBombsNumber;
         PlayerController.onLifeLost -= UpdateLifesNumber;
         PlayerController.onPlayerDeath -= ActivateDiedMenu;

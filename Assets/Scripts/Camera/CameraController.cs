@@ -16,12 +16,14 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        MuzzleController.OnShooting += ShakeCamera;
+        //MuzzleController.OnShooting += ShakeCamera;
+        Debug.Log("=====================> CIAO\n");
+
     }
 
     private void OnDestroy()
     {
-        MuzzleController.OnShooting -= ShakeCamera;
+        //MuzzleController.OnShooting -= ShakeCamera;
     }
 
     private void Start()
